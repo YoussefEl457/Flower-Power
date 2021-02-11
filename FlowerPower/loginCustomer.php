@@ -1,24 +1,24 @@
 <?php
 
 include 'database.php';
-$obj = new database();
-//$obj->insertKlantUser('youssef', 'yurr');
 
-//$_POST = ['username'=>'youssef', 'password'=>'123']; 
-
+$msg = '';
 if(isset($_POST['submit'])){
-
+    
     $fieldnames = ['username', 'password'];
     $error = false;
-
+    
     foreach($fieldnames as $fieldname){
         if(!isset($_POST[$fieldname]) || empty($_POST[$fieldname])){
             $error = true; 
+            $msg = 'error';
         }
 
     }
 
     if(!$error){
+        $obj = new database();
+        $obj->loginklant($_POST['username'], $_POST['password']);
         //yurr
     }else{
         //do something
@@ -39,9 +39,9 @@ if(isset($_POST['submit'])){
         <a href="index.php"><img src="bloemen.png" class="bloemen"></a>
         <div class="inloggen">
             <form method="post" action="loginCustomer.php">
-                <input type="text" title="username" placeholder="Username" /><br>
-                <input type="password" title="password" placeholder="Password" /><br>
-                <button type="submit" class="btn">Login</button><br>
+                <input type="text" name="username" placeholder="Username" /><br>
+                <input type="password" name="password" placeholder="Password" /><br>
+                <button type="submit" name="submit" class="btn">Login</button><br>
             </form>
         </div>    
     </div>

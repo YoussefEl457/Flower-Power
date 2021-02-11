@@ -23,7 +23,7 @@ class database {
     }
 
     function insertKlantUser($username, $password){
-        $sql = "INSERT INTO klant VALUES (:klantcode, :vn, :tv, :sur, :adres,:postcode,:woonplaats, :geboortedatum, :gebruikersnaam, :wachtwoord)";
+        $sql = "INSERT INTO klant(klantcode, gebruikersnaam, wachtwoord) VALUES (:klantcode, :gebruikersnaam, :wachtwoord)";
 
         $stmt = $this->dbh->prepare($sql);
         $stmt->execute([
@@ -44,14 +44,43 @@ class database {
         ]);
     }
 
-    function loginexample($username, $pwd){
-        $sql="SELECT medewerkerscode, gebruikersnaam FROM medewerker WHERE gebruikersnam = :uname";
+    function loginmedewerker($username, $pwd){
+        $sql="SELECT * FROM medewerker WHERE gebruikersnaam = :uname";
 
-        $stmt = $this->dbh->prepare($sql); // prepared statements prevent sql injections
-        $stmt->execute(['uname'=>$username]); //voert prepared statement uit
+        $stmt = $this->dbh->prepare($sql); 
+        $stmt->execute(['uname'=>$username]); 
 
-        $result = $stmt->fetch(PDO::FETCH_ASSOC); //$result['id] of $result['gebruikersnaam']
-        print_r($result);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC); 
+        if($result){
+            if(password_verify($pwd, $result["wachtwoord"])) {
+                echo "Valid Password!";
+                header("Location:overzicht_keuze.php");
+            } else {
+                echo "Invalid Password!";
+            }
+        } else {
+            echo "Invalid Login";
+        }
+
+    }
+
+    function loginklant($username, $pwd){
+        $sql="SELECT * FROM klant WHERE gebruikersnaam = :uname";
+
+        $stmt = $this->dbh->prepare($sql); 
+        $stmt->execute(['uname'=>$username]); 
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC); 
+        if($result){
+            if(password_verify($pwd, $result["wachtwoord"])) {
+                echo "Valid Password!";
+                header("Location:");
+            } else {
+                echo "Invalid Password!";
+            }
+        } else {
+            echo "Invalid Login";
+        }
 
     }
 }

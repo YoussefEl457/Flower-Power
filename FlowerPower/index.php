@@ -14,7 +14,7 @@
                 <li><a href="loginEmployee.php">Inloggen medewerkers</a></li>
                 <li><a href="contact.php">Contactpagina</a></li>
                 <li><a href="loginCustomer.php">Inloggen klanten</a></li>
-                <li><a href="">Registreren</a></li>
+                <li><a href="register.php">Registreren</a></li>
             </ul>
         </div>    
     </div>
